@@ -1,4 +1,4 @@
-# watchpresso
+# watchpresso - Simple Espresso Timer
 
 ## Project setup
 ```
