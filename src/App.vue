@@ -1,32 +1,57 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div id="app" class="container">
+    <div class="paper">
+      <Navigation />
+
+      <router-view />
+
+      <Nosleep />
     </div>
-    <router-view/>
+
+    <div class="footer">
+      ~
+      <font-awesome-icon icon="coffee"></font-awesome-icon>
+      ~
+    </div>
   </div>
 </template>
 
+<script lang="ts">
+import Vue from 'vue';
+import Nosleep from '@/components/Nosleep.vue';
+import Navigation from '@/components/Navigation.vue';
+
+export default Vue.extend({
+  name: 'App',
+  components: {
+    Nosleep,
+    Navigation,
+  },
+  props: {},
+  data() {
+    return {};
+  },
+  methods: {
+
+  },
+});
+</script>
+
 <style lang="scss">
+@import "../node_modules/papercss/dist/paper.min.css";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  color: #382C2C;
+  margin-top: 20px;
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.footer {
+  margin-top: 25px;
+  text-align: center;
+  width: 100%;
+  opacity: .1;
 }
 </style>

@@ -1,9 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import { BaseState } from '@/types';
+import ArchiveModule from './archive';
+
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+export default new Vuex.Store<BaseState>({
   state: {
   },
   mutations: {
@@ -11,5 +14,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
+    ArchiveModule,
   },
 });
