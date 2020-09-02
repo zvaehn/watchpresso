@@ -16,7 +16,7 @@
             :key="entry.id">
 
             <td>{{ index + 1 }}</td>
-            <td>{{ entry.time / 10 }}s</td>
+            <td><strong>{{ entry.time / 10 }}s</strong></td>
             <td>{{ new Date(entry.date).toUTCString() }}</td>
             <td>
               <font-awesome-icon

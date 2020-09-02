@@ -47,7 +47,10 @@ export default Vue.extend({
   methods: {
     setActiveTab(name: string) {
       this.activeTab = name;
-      this.$router.push(name);
+
+      if (this.$router.currentRoute.path !== name) {
+        this.$router.push(name);
+      }
     },
   },
   computed: {

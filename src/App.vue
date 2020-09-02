@@ -34,6 +34,9 @@ export default Vue.extend({
   methods: {
 
   },
+  beforeCreate() {
+    this.$store.dispatch('initializeArchive');
+  },
 });
 </script>
 
