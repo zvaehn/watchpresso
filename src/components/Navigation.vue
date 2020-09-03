@@ -41,7 +41,7 @@ export default Vue.extend({
           route: '/archive',
         },
       ],
-      activeTab: '',
+      activeTab: '/stopwatch',
     };
   },
   methods: {
@@ -56,7 +56,14 @@ export default Vue.extend({
   computed: {
   },
   mounted() {
-    this.activeTab = this.$router.currentRoute.path;
+    const { path } = this.$router.currentRoute;
+    const matchingTab = this.tabs.find((tab) => tab.route.search(path) >= 0);
+
+    if (matchingTab) {
+      this.activeTab = matchingTab.route;
+    } else {
+      this.activeTab = this.tabs[0].route;
+    }
   },
 });
 </script>

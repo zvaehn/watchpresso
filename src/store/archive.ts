@@ -14,7 +14,12 @@ const ArchiveModule: Module<ArchiveStore, any> = {
   },
 
   getters: {
-    archive: (state: ArchiveStore) => state.archive,
+    archive: (state: ArchiveStore) => {
+      const { archive } = state;
+      return archive.sort(
+        (a: TimeEntryInterface, b: TimeEntryInterface) => b.date - a.date,
+      );
+    },
   },
 
   actions: {

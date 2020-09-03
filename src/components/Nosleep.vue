@@ -49,7 +49,6 @@ export default Vue.extend({
     },
   },
   mounted() {
-    this.noSleep.disable();
     this.initializeNoSleep();
   },
   beforeDestroy() {

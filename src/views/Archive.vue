@@ -17,7 +17,8 @@
 
             <td>{{ index + 1 }}</td>
             <td><strong>{{ entry.time / 10 }}s</strong></td>
-            <td>{{ new Date(entry.date).toUTCString() }}</td>
+            <!-- <td>{{ new Date(entry.date).toUTCString() }}</td> -->
+            <td>{{ formatDate(entry.date) }}</td>
             <td>
               <font-awesome-icon
               icon="times"
@@ -56,6 +57,14 @@ export default Vue.extend({
     },
     clearArchive() {
       this.$store.dispatch('clearArchive');
+    },
+    formatDate(timestamp: number): string {
+      const date = new Date(timestamp);
+
+      return date.toLocaleString(
+        'de-DE',
+        { timeZone: 'Europe/Berlin' },
+      );
     },
   },
   computed: {
