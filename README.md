@@ -1,5 +1,7 @@
 # watchpresso - Simple Espresso Timer
 
+[https://zvaehn.github.io/watchpresso/](https://zvaehn.github.io/watchpresso/)
+
 ## Project setup
 ```
 npm install
