@@ -1,49 +1,47 @@
 <template>
-  <div class="archive-view">
-    <div class="row">
-      <div
-        v-for="(entries, key, i) in groupedArchive"
-        class="collapsible"
-        :key="key">
-        <input :id="`collapsible_${key}`"
-          type="checkbox"
-          name="collapsible"
-          :checked="i === 0">
-        <label :for="`collapsible_${key}`">
-          {{ key }}
-        </label>
-        <div class="collapsible-body">
-          <table v-if="hasArchive">
-            <thead>
-              <tr>
-                <th>Time</th>
-                <th>Duration</th>
-                <th>Dose</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody class="archive-table-body">
-              <tr
-                v-for="(entry, index) in entries"
-                :key="`entry-${index}`">
-                <td>{{ formatDateTime(entry.date) }}</td>
-                <td>{{ entry.time / 10 }}s</td>
-                <td>{{ entry.dose ? `${entry.dose.toFixed(1)}g` : '-' }}</td>
-                <td>
-                  <font-awesome-icon
-                    icon="times"
-                    class="delete-time"
-                    @click="deleteTime(entry)">
-                  </font-awesome-icon>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <div class="archive-view container-lg">
+    <div
+      v-for="(entries, key, i) in groupedArchive"
+      class="collapsible"
+      :key="key">
+      <input :id="`collapsible_${key}`"
+        type="checkbox"
+        name="collapsible"
+        :checked="i === 0">
+      <label :for="`collapsible_${key}`">
+        {{ key }}
+      </label>
+      <div class="collapsible-body">
+        <table v-if="hasArchive">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Duration</th>
+              <th>Dose</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody class="archive-table-body">
+            <tr
+              v-for="(entry, index) in entries"
+              :key="`entry-${index}`">
+              <td>{{ formatDateTime(entry.date) }}</td>
+              <td>{{ entry.time / 10 }}s</td>
+              <td>{{ entry.dose ? `${entry.dose.toFixed(1)}g` : '-' }}</td>
+              <td>
+                <font-awesome-icon
+                  icon="times"
+                  class="delete-time"
+                  @click="deleteTime(entry)">
+                </font-awesome-icon>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
-      <p v-if="!hasArchive" class="empty-archive">No times stopped yet.</p>
     </div>
+
+    <p v-if="!hasArchive" class="empty-archive">No times stopped yet.</p>
 
     <hr class="spacer margin-large">
 

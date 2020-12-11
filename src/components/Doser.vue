@@ -1,5 +1,5 @@
 <template>
-  <div class="doser row flex-center flex-middle">
+  <div class="doser row flex-spaces flex-middle">
     <button
       class="btn-medium"
       @click="decreaseDose()">
