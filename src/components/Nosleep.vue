@@ -13,10 +13,10 @@
       Screen keeps awake.
     </span> -->
 
-    <div
+    <!-- <div
       class="nosleep-indicator"
       :class="{ 'is-active': noSleepEnabled }">
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -52,7 +52,7 @@ export default Vue.extend({
     this.initializeNoSleep();
   },
   beforeDestroy() {
-    this.noSleep.disable();
+    this.disableNoSleep();
   },
 });
 </script>

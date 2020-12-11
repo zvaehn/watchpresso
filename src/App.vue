@@ -5,7 +5,7 @@
 
       <router-view />
 
-      <Nosleep />
+      <!-- <Nosleep /> -->
     </div>
 
     <div class="footer">
@@ -18,13 +18,13 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Nosleep from '@/components/Nosleep.vue';
+// import Nosleep from '@/components/Nosleep.vue';
 import Navigation from '@/components/Navigation.vue';
 
 export default Vue.extend({
   name: 'App',
   components: {
-    Nosleep,
+    // Nosleep,
     Navigation,
   },
   props: {},
@@ -32,16 +32,20 @@ export default Vue.extend({
     return {};
   },
   methods: {
-
   },
   beforeCreate() {
     this.$store.dispatch('initializeArchive');
+    this.$store.dispatch('initializeDose');
   },
 });
 </script>
 
 <style lang="scss">
 @import "../node_modules/papercss/dist/paper.min.css";
+
+body {
+  touch-action: manipulation;
+}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

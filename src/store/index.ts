@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import { BaseState } from '@/types';
 import ArchiveModule from './archive';
+import DoseModule from './dose';
 
 Vue.use(Vuex);
 
@@ -15,5 +16,6 @@ export default new Vuex.Store<BaseState>({
   },
   modules: {
     ArchiveModule,
+    DoseModule,
   },
 });

@@ -54,6 +54,9 @@ export default Vue.extend({
 
       return 'Stop';
     },
+    dose(): number {
+      return this.$store.getters.getDose;
+    },
   },
   methods: {
     tick() {
@@ -88,6 +91,7 @@ export default Vue.extend({
         id: Math.random(),
         time: this.time,
         date: Date.now(),
+        dose: this.dose,
       });
 
       this.$store.dispatch('addArchiveItem', archiveItem);

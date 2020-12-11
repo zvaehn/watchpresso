@@ -1,47 +1,62 @@
 <template>
   <div class="archive-view">
     <div class="row">
-      <table v-if="archive.length" >
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Time</th>
-            <th>Date</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="(entry, index) in archive"
-            :key="entry.id">
+      <div
+        v-for="(entries, key, i) in groupedArchive"
+        class="collapsible"
+        :key="key">
+        <input :id="`collapsible_${key}`"
+          type="checkbox"
+          name="collapsible"
+          :checked="i === 0">
+        <label :for="`collapsible_${key}`">
+          {{ key }}
+        </label>
+        <div class="collapsible-body">
+          <table v-if="hasArchive">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Duration</th>
+                <th>Dose</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody class="archive-table-body">
+              <tr
+                v-for="(entry, index) in entries"
+                :key="`entry-${index}`">
+                <td>{{ formatDateTime(entry.date) }}</td>
+                <td>{{ entry.time / 10 }}s</td>
+                <td>{{ entry.dose ? `${entry.dose.toFixed(1)}g` : '-' }}</td>
+                <td>
+                  <font-awesome-icon
+                    icon="times"
+                    class="delete-time"
+                    @click="deleteTime(entry)">
+                  </font-awesome-icon>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-            <td>{{ index + 1 }}</td>
-            <td><strong>{{ entry.time / 10 }}s</strong></td>
-            <!-- <td>{{ new Date(entry.date).toUTCString() }}</td> -->
-            <td>{{ formatDate(entry.date) }}</td>
-            <td>
-              <font-awesome-icon
-              icon="times"
-              class="delete-time"
-              @click="deleteTime(entry)">
-              </font-awesome-icon>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p v-else class="empty-archive">No times stopped yet.</p>
+      <p v-if="!hasArchive" class="empty-archive">No times stopped yet.</p>
     </div>
 
     <hr class="spacer margin-large">
 
     <div class="row">
-      <button class="btn-small" @click="clearArchive">delete archive</button>
+      <button class="btn-small" @click="clearArchive">
+        delete archive
+      </button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import TimeEntry, { GroupedArchive } from '@/types/archive';
 import Vue from 'vue';
 
 export default Vue.extend({
@@ -66,10 +81,45 @@ export default Vue.extend({
         { timeZone: 'Europe/Berlin' },
       );
     },
+    formatMonth(timestamp: number): string {
+      const date = new Date(timestamp);
+      return date.toLocaleDateString(this.locale, {
+        month: 'long',
+        year: 'numeric',
+      });
+    },
+    formatDateTime(timestamp: number): string {
+      const date = new Date(timestamp);
+      return date.toLocaleTimeString(this.locale, {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    },
   },
   computed: {
-    archive(): Array<number> {
+    hasArchive(): boolean {
+      return Object.keys(this.groupedArchive).length > 0;
+    },
+    groupedArchive(): GroupedArchive {
+      const groupedArchive: GroupedArchive = {};
+
+      this.archive.forEach((item: TimeEntry) => {
+        const month = this.formatMonth(item.date);
+
+        if (groupedArchive[month] === undefined) {
+          groupedArchive[month] = [];
+        }
+
+        groupedArchive[month].push(item);
+      });
+
+      return groupedArchive;
+    },
+    archive(): Array<TimeEntry> {
       return this.$store.getters.archive;
+    },
+    locale(): string {
+      return navigator.languages !== undefined ? navigator.languages[0] : navigator.language;
     },
   },
 });
@@ -98,5 +148,9 @@ export default Vue.extend({
 .empty-archive {
   width: 100%;
   text-align: center;
+}
+
+.archive-table-body {
+  letter-spacing: 1px;
 }
 </style>

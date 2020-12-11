@@ -9,11 +9,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'Stopwatch',
-    component: Stopwatch,
-  },
-  {
-    path: '/stopwatch',
-    name: 'Stopwatch',
+    alias: '/stopwatch',
     component: Stopwatch,
   },
   {
