@@ -52,10 +52,16 @@ export default Vue.extend({
         return 'Restart';
       }
 
-      return 'Stop';
+      return `Stop at ${this.yield}g`;
+    },
+    yield(): number {
+      return this.$store.getters.getYield;
     },
     dose(): number {
       return this.$store.getters.getDose;
+    },
+    ratio(): number {
+      return this.$store.getters.getRatio;
     },
   },
   methods: {
@@ -92,6 +98,7 @@ export default Vue.extend({
         time: this.time,
         date: Date.now(),
         dose: this.dose,
+        ratio: this.ratio,
       });
 
       this.$store.dispatch('addArchiveItem', archiveItem);

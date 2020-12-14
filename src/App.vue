@@ -10,7 +10,10 @@
 
     <div class="footer">
       ~
-      <font-awesome-icon icon="coffee"></font-awesome-icon>
+      <font-awesome-icon
+        icon="coffee"
+        @click="toggleDarkMode()">
+      </font-awesome-icon>
       ~
     </div>
   </div>
@@ -29,13 +32,27 @@ export default Vue.extend({
   },
   props: {},
   data() {
-    return {};
+    return {
+      darkModeIsActive: false,
+    };
   },
   methods: {
+    toggleDarkMode() {
+      this.darkModeIsActive = !this.darkModeIsActive;
+      const html = document.getElementsByTagName('html')[0];
+      const darkmodeClass = 'dark';
+
+      if (this.darkModeIsActive) {
+        html.classList.add(darkmodeClass);
+      } else {
+        html.classList.remove(darkmodeClass);
+      }
+    },
   },
   beforeCreate() {
     this.$store.dispatch('initializeArchive');
     this.$store.dispatch('initializeDose');
+    this.$store.dispatch('initializeRatio');
   },
 });
 </script>

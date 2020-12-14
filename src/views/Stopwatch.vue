@@ -1,8 +1,7 @@
 <template>
   <div class="stopwatch-view">
-    <Timer></Timer>
-    <hr class="spacer">
-    <Doser></Doser>
+    <Timer class="timer"></Timer>
+    <Doser class="doser"></Doser>
   </div>
 </template>
 
@@ -31,10 +30,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.stopwatch-view {
-  .spacer {
-    margin-top: 35px;
-    margin-bottom: 50px;
-  }
+.doser {
+  margin-top: 50px;
 }
 </style>

@@ -16,8 +16,9 @@
           <thead>
             <tr>
               <th>Time</th>
-              <th>Duration</th>
+              <th>Dur.</th>
               <th>Dose</th>
+              <th>Yield</th>
               <th></th>
             </tr>
           </thead>
@@ -25,9 +26,16 @@
             <tr
               v-for="(entry, index) in entries"
               :key="`entry-${index}`">
-              <td>{{ formatDateTime(entry.date) }}</td>
+              <td>
+                <span :popover-top="formatDate(entry.date)">
+                  <span class="badge">
+                    {{ formatDateTime(entry.date) }}&thinsp;h
+                  </span>
+                </span>
+              </td>
               <td>{{ entry.time / 10 }}s</td>
               <td>{{ entry.dose ? `${entry.dose.toFixed(1)}g` : '-' }}</td>
+              <td>45g</td>
               <td>
                 <font-awesome-icon
                   icon="times"
@@ -150,5 +158,19 @@ export default Vue.extend({
 
 .archive-table-body {
   letter-spacing: 1px;
+}
+
+// Override
+.collapsible input[id^='collapsible']:checked ~ div.collapsible-body {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+[popover-top] {
+  margin: 0;
+
+  &:after {
+    margin: 25px;
+  }
 }
 </style>
