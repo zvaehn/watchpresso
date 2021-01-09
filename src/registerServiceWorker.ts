@@ -2,6 +2,8 @@
 
 import { register } from 'register-service-worker';
 
+let serviceWorkerRegistration: ServiceWorkerRegistration;
+
 if (process.env.NODE_ENV === 'production') {
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready() {
@@ -10,14 +12,21 @@ if (process.env.NODE_ENV === 'production') {
         + 'For more details, visit https://goo.gl/AFskqB',
       );
     },
-    registered() {
+    registered(registration) {
       console.log('Service worker has been registered.');
+      serviceWorkerRegistration = registration;
+
+      try {
+        serviceWorkerRegistration.update();
+      } catch (err) {
+        console.log(err);
+      }
     },
     cached() {
       console.log('Content has been cached for offline use.');
     },
     updatefound() {
-      console.log('New content is downloading.');
+      console.log('New content is downloading...');
     },
     updated() {
       console.log('New content is available; please refresh.');
