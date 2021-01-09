@@ -35,7 +35,7 @@
               </td>
               <td>{{ entry.time / 10 }}s</td>
               <td>{{ entry.dose ? `${entry.dose.toFixed(1)}g` : '-' }}</td>
-              <td>45g</td>
+              <td>{{ getYield(entry) }}</td>
               <td>
                 <font-awesome-icon
                   icon="times"
@@ -78,6 +78,13 @@ export default Vue.extend({
     },
     clearArchive() {
       this.$store.dispatch('clearArchive');
+    },
+    getYield(entry: TimeEntry): string {
+      if (entry.dose && entry.ratio) {
+        return `${(entry.dose * entry.ratio).toFixed(1)}g`;
+      }
+
+      return '-';
     },
     formatDate(timestamp: number): string {
       const date = new Date(timestamp);
