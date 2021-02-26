@@ -9,6 +9,10 @@ import {
   faCoffee,
   faAdjust,
   faStar,
+  faCogs,
+  faTrash,
+  faBalanceScale,
+  faAngleDoubleRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -25,6 +29,10 @@ library.add(
   faCoffee,
   faAdjust,
   faStar,
+  faCogs,
+  faTrash,
+  faBalanceScale,
+  faAngleDoubleRight,
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

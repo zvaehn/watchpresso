@@ -73,7 +73,7 @@
               <td>{{ getYield(entry) }}</td>
               <td>
                 <font-awesome-icon
-                  icon="times"
+                  icon="trash"
                   class="delete-time"
                   @click="deleteTime(entry)">
                 </font-awesome-icon>
@@ -116,7 +116,7 @@ export default Vue.extend({
     },
     getYield(entry: TimeEntry): string {
       if (entry.dose && entry.ratio) {
-        return `${(entry.dose * entry.ratio).toFixed(1)}g`;
+        return `${(entry.dose * entry.ratio).toFixed(0)}g`;
       }
 
       return '-';

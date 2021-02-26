@@ -3,8 +3,24 @@
     <div class="collapsible is-brew-settings">
       <input id="collapsible-brew-settings" type="checkbox" name="collapsible-brew-settings">
       <label for="collapsible-brew-settings">
-        <small class="_brew-preview">
-          {{ formattedDose }} in, {{ formattedRatio }}, {{ formattedYield }} out
+        <small>
+          <div class="row flex-edges brew-settings">
+            <div class="col-6 col-left">
+              {{ formattedDose }}
+              <font-awesome-icon
+                class="brew-icon"
+                icon="angle-double-right">
+              </font-awesome-icon>
+              {{ formattedYield }}
+            </div>
+            <div class="col-6 col-right">
+              {{ formattedGrind }}
+              <font-awesome-icon
+                class="brew-icon"
+                icon="cogs">
+              </font-awesome-icon>
+            </div>
+          </div>
         </small>
       </label>
       <div class="collapsible-body">
@@ -15,7 +31,7 @@
             -
           </button>
           <div class="dose-value">
-            {{ formattedDose }}
+            Dose: {{ formattedDose }}
           </div>
           <button
             class="btn-small"
@@ -31,11 +47,27 @@
             -
           </button>
           <div class="dose-value">
-            {{ formattedRatio }}
+            Ratio: {{ formattedRatio }}
           </div>
           <button
             class="btn-small"
             @click="increaseRatio()">
+            +
+          </button>
+        </div>
+
+        <div class="grind row flex-edges flex-middle">
+          <button
+            class="btn-small"
+            @click="decreaseGrind()">
+            -
+          </button>
+          <div class="grind-value">
+            Grind: {{ formattedGrind }}
+          </div>
+          <button
+            class="btn-small"
+            @click="increaseGrind()">
             +
           </button>
         </div>
@@ -55,6 +87,7 @@ export default Vue.extend({
     return {
       doseStep: 0.5,
       ratioStep: 0.1,
+      grindStep: 0.1,
     };
   },
   props: {
@@ -69,6 +102,9 @@ export default Vue.extend({
     yield(): number {
       return this.$store.getters.getYield;
     },
+    grind(): number {
+      return this.$store.getters.getGrind;
+    },
     formattedDose(): string {
       return `${this.dose.toFixed(1)}g`;
     },
@@ -76,7 +112,10 @@ export default Vue.extend({
       return `1:${this.ratio.toFixed(1)}`;
     },
     formattedYield(): string {
-      return `${this.yield}g`;
+      return `${this.yield.toFixed(1)}g`;
+    },
+    formattedGrind(): string {
+      return `${this.grind.toFixed(1)}`;
     },
   },
   methods: {
@@ -108,6 +147,17 @@ export default Vue.extend({
         this.$store.dispatch('setRatio', newRatio);
       }
     },
+    increaseGrind() {
+      const newGrind = this.grind + this.grindStep;
+      this.$store.dispatch('setGrind', newGrind);
+    },
+    decreaseGrind() {
+      const newGrind = this.grind - this.grindStep;
+
+      if (newGrind > 0) {
+        this.$store.dispatch('setGrind', newGrind);
+      }
+    },
   },
 });
 </script>
@@ -119,20 +169,28 @@ export default Vue.extend({
   }
 }
 
+.brew-settings {
+  margin-bottom: 0;
+
+  .col-left {
+    text-align: left;
+  }
+
+  .col-right {
+    text-align: right;
+  }
+
+  .brew-icon {
+    opacity: .4;
+    margin: 0 .1em;
+  }
+}
+
 .dose-value {
   font-size: 1rem;
 }
 
 .collapsible.is-brew-settings {
   width: 100%;
-}
-
-.brew-preview {
-  margin-top: .75rem;
-  display: block;
-  color: grey;
-  font-weight: normal;
-  font-style: italic;
-  letter-spacing: -1px;
 }
 </style>

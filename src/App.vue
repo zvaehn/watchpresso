@@ -53,6 +53,8 @@ export default Vue.extend({
     this.$store.dispatch('initializeArchive');
     this.$store.dispatch('initializeDose');
     this.$store.dispatch('initializeRatio');
+    this.$store.dispatch('initializeRatio');
+    this.$store.dispatch('initializeGrind');
   },
 });
 </script>
