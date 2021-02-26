@@ -48,6 +48,10 @@
                             <td>{{ formatDate(entry.date) }}</td>
                           </tr>
                           <tr>
+                            <td>Grind: </td>
+                            <td>{{ entry.grind }}</td>
+                          </tr>
+                          <tr>
                             <td>Rating: </td>
                             <td>
                               <font-awesome-icon

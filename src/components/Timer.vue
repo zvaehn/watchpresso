@@ -52,7 +52,7 @@ export default Vue.extend({
         return 'Restart';
       }
 
-      return `Stop at ${this.yield}g`;
+      return `Stop at ${this.yield.toFixed(0)}g`;
     },
     yield(): number {
       return this.$store.getters.getYield;
@@ -62,6 +62,9 @@ export default Vue.extend({
     },
     ratio(): number {
       return this.$store.getters.getRatio;
+    },
+    grind(): number {
+      return this.$store.getters.getGrind;
     },
   },
   methods: {
@@ -99,6 +102,7 @@ export default Vue.extend({
         date: Date.now(),
         dose: this.dose,
         ratio: this.ratio,
+        grind: this.grind,
         rating: 0,
       });
 
