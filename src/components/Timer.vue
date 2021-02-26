@@ -99,6 +99,7 @@ export default Vue.extend({
         date: Date.now(),
         dose: this.dose,
         ratio: this.ratio,
+        rating: 0,
       });
 
       this.$store.dispatch('addArchiveItem', archiveItem);

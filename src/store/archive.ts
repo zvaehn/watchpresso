@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import { Module } from 'vuex';
 
 import {
@@ -32,6 +33,9 @@ const ArchiveModule: Module<ArchiveStore, any> = {
     clearArchive({ commit }) {
       commit('CLEAR_ARCHIVE');
     },
+    updateEntry({ commit }, entry: TimeEntryInterface) {
+      commit('UPDATE_ARCHIVE_ITEM', entry);
+    },
     initializeArchive({ commit }) {
       const localArchive = localStorage.getItem(archiveLocalStorageKey);
 
@@ -58,13 +62,24 @@ const ArchiveModule: Module<ArchiveStore, any> = {
     SET_ARCHIVE: (state, archive: Array<TimeEntryInterface>) => {
       state.archive = archive;
     },
-    DELETE_ARCHIVE_ITEM: (state, time: TimeEntryInterface) => {
-      const imageIndex = state.archive.findIndex(
-        (el: TimeEntryInterface) => el.id === time.id,
+    DELETE_ARCHIVE_ITEM: (state, item: TimeEntryInterface) => {
+      const itemIndex = state.archive.findIndex(
+        (el: TimeEntryInterface) => el.id === item.id,
       );
 
-      if (imageIndex >= 0) {
-        state.archive.splice(imageIndex, 1);
+      if (itemIndex >= 0) {
+        state.archive.splice(itemIndex, 1);
+      }
+
+      window.localStorage.setItem(archiveLocalStorageKey, JSON.stringify(state.archive));
+    },
+    UPDATE_ARCHIVE_ITEM: (state, item: TimeEntryInterface) => {
+      const itemIndex = state.archive.findIndex(
+        (el: TimeEntryInterface) => el.id === item.id,
+      );
+
+      if (itemIndex >= 0) {
+        Vue.set(state.archive, itemIndex, item);
       }
 
       window.localStorage.setItem(archiveLocalStorageKey, JSON.stringify(state.archive));

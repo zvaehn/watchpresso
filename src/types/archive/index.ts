@@ -12,6 +12,7 @@ export interface TimeEntryInterface {
   date: number;
   dose: number;
   ratio: number;
+  rating: number;
 }
 
 export default class TimeEntry implements TimeEntryInterface {
@@ -25,11 +26,14 @@ export default class TimeEntry implements TimeEntryInterface {
 
   ratio: number;
 
+  rating = 0;
+
   constructor(data: TimeEntryInterface) {
     this.id = data.id;
     this.time = data.time;
     this.date = data.date;
     this.dose = data.dose;
     this.ratio = data.ratio;
+    this.rating = data.rating;
   }
 }

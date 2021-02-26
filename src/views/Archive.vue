@@ -27,11 +27,46 @@
               v-for="(entry, index) in entries"
               :key="`entry-${index}`">
               <td>
-                <span :popover-top="formatDate(entry.date)">
-                  <span class="badge">
-                    {{ formatDateTime(entry.date) }}&thinsp;h
-                  </span>
-                </span>
+                <label
+                  class="time-label"
+                  :for="`entry-date-${entry.id}`">
+                  {{ formatDateOnly(entry.date) }}
+                </label>
+                <input class="modal-state" :id="`entry-date-${entry.id}`" type="checkbox">
+                <div class="modal">
+                  <label class="modal-bg" :for="`entry-date-${entry.id}`"></label>
+                  <div class="modal-body">
+                    <label class="btn-close modal-close" :for="`entry-date-${entry.id}`">
+                      ✘
+                    </label>
+                    <h4 class="modal-title">Entry Details</h4>
+                    <p class="modal-text">
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td>Time: </td>
+                            <td>{{ formatDate(entry.date) }}</td>
+                          </tr>
+                          <tr>
+                            <td>Rating: </td>
+                            <td>
+                              <font-awesome-icon
+                                v-for="i in 5"
+                                icon="star"
+                                :class="{
+                                  'rating-icon': true,
+                                  'is-filled': entry.rating >= i,
+                                }"
+                                :key="i"
+                                @click="setRatingForEntry(entry, i)">
+                              </font-awesome-icon>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </p>
+                  </div>
+                </div>
               </td>
               <td>{{ entry.time / 10 }}s</td>
               <td>{{ entry.dose ? `${entry.dose.toFixed(1)}g` : '-' }}</td>
@@ -101,12 +136,25 @@ export default Vue.extend({
         year: 'numeric',
       });
     },
+    formatDateOnly(timestamp: number): string {
+      const date = new Date(timestamp);
+      return date.toLocaleDateString(this.locale, {
+        weekday: 'short',
+        day: 'numeric',
+      });
+    },
     formatDateTime(timestamp: number): string {
       const date = new Date(timestamp);
       return date.toLocaleTimeString(this.locale, {
         hour: '2-digit',
         minute: '2-digit',
       });
+    },
+    setRatingForEntry(entry: TimeEntry, rating: number) {
+      const newEntry = entry;
+      newEntry.rating = rating;
+
+      this.$store.dispatch('updateEntry', newEntry);
     },
   },
   computed: {
@@ -148,6 +196,12 @@ export default Vue.extend({
   }
 }
 
+.time-label {
+  white-space: nowrap;
+  border: none;
+  padding: 0;
+}
+
 .archive-list {
   width: 100%;
   padding: 0;
@@ -167,10 +221,25 @@ export default Vue.extend({
   letter-spacing: 1px;
 }
 
+.rating-icon {
+  opacity: .2;
+
+  &.is-filled {
+    opacity: 1;
+  }
+}
+
 // Override
-.collapsible input[id^='collapsible']:checked ~ div.collapsible-body {
-  padding-left: 0;
-  padding-right: 0;
+.collapsible {
+  label.modal-close {
+    border: none;
+  }
+
+  input[id^='collapsible']:checked ~ div.collapsible-body {
+    padding-left: 0;
+    padding-right: 0;
+    max-height: fit-content;
+  }
 }
 
 [popover-top] {

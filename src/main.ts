@@ -8,6 +8,7 @@ import {
   faTimes,
   faCoffee,
   faAdjust,
+  faStar,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -23,6 +24,7 @@ library.add(
   faTimes,
   faCoffee,
   faAdjust,
+  faStar,
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
