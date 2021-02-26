@@ -18,6 +18,7 @@ if (process.env.NODE_ENV === 'production') {
 
       try {
         serviceWorkerRegistration.update();
+        console.log('Service worker has been updated.');
       } catch (err) {
         console.log(err);
       }
